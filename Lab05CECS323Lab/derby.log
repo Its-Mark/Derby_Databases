@@ -1,0 +1,33 @@
+Tue Feb 02 09:36:47 PST 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Tue Feb 02 09:36:47 PST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-63d1-752e-ffff8f932b0b 
+on database directory D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab\CECS323Lab with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
+Loaded from file:/C:/Program%20Files%20(x86)/Derby/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=14.0.1+7
+user.dir=C:\Program Files (x86)\Derby\db-derby-10.14.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Feb 02 09:37:05 PST 2021:
+Shutting down instance a816c00e-0177-63d1-752e-ffff8f932b0b on database directory D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab\CECS323Lab with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
+Tue Feb 02 09:37:05 PST 2021 Thread[DRDAConnThread_2,5,main] (DATABASE = CECS323Lab), (DRDAID = {2}), Database 'CECS323Lab' shutdown.
+----------------------------------------------------------------
+Tue Feb 02 09:37:56 PST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 6ede40af-0177-63d1-752e-ffff8f932b0b 
+on database directory D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab\CECS323Lab with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
+Loaded from file:/C:/Program%20Files%20(x86)/Derby/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=14.0.1+7
+user.dir=C:\Program Files (x86)\Derby\db-derby-10.14.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Feb 02 12:16:40 PST 2021: Shutting down Derby engine
