@@ -1,0 +1,107 @@
+create schema "Lab One to Many";
+
+
+/*
+This is the parent table for this lab.  We could have created a parent above this that 
+captured information about the college, such as the name of the Dean, the location of
+the Dean's office, ... but I chose to start at this point in that chain.
+*/
+create table department (
+    college     varchar (50) not null,
+    name        varchar (50) not null,				--Of the department
+    chair       varchar (50) not null,				--Full name of dept chair
+    officeBldg  varchar (10) not null,				--varchar(3) might be enough
+    officeNo    integer      not null,
+    constraint department_pk primary key (name));		--I believe dept names unique across campus
+
+/*
+This is a few representative departments within CSULB.  I have two colleges represented here.
+Do not let this list stunt your creativity.  If you have other departments/colleges that you 
+want to work with, by all means, insert them here as well.
+
+Note that we can insert several records at a shot with one statement with this form of the 
+insert.  Good news is it's less typing.  Bad news is, they either all go in at once, or none
+of these rows goes in.
+*/
+insert into department (college, name, chair, officeBldg, officeNo)
+    values  ('Engineering', 'Chemical Engineering', 'Roger Lo', 'EN2', 100),
+            ('Engineering', 'Computer Engineering Computer Science', 'Mehrdad Aliasgari', 'ECS', 542),
+            ('Liberal Arts', 'English', 'Eileen Klink', 'MHB', 419);
+
+/*
+Within each department, there are many courses.  Just about every deparment has a 100 course
+that is the intro to that department's area of study.  So clearly, the course number is not
+unique.  But the combination of department name and course number is unique.  So, the relationship
+from department to course is identifying, of course.
+*/
+create table course (
+    departmentName  varchar(50)     not null,				--Notice that it gets a new name
+    courseName      varchar(50)     not null,
+    courseNumber    integer         not null,
+    description     varchar(2000)   not null,				--Never put this into the key
+    units           int             not null,
+    constraint      course_department_01 foreign key (departmentName)	--We role named name in department
+                    references department (name),
+    constraint      course_pk primary key (departmentName, courseNumber),
+    constraint      course_uk_01 unique (departmentName, courseName));	--This is a candidate key
+
+insert into course (departmentName, courseName, courseNumber, description, units)
+    values  ('Computer Engineering Computer Science', 'The Digital Information Age',
+                202, 'The introduction and use of common-place digital and 
+                      electronic devices and how this technology affects our society. 
+                      Topics include advances in 3D imaging, 3D printing, 
+                      Processors, Memory, Security and Privacy.', 3),
+            ('Computer Engineering Computer Science', 'Database Fundamentals',
+                323, 'Fundamental topics on database management. Topics include 
+                      entity-relationship models, database design, data definition 
+                      language, the relational model, data manipulation language, 
+                      database application programming and normalization.', 3),
+            ('English', 'Introduction to Creative Writing: Fiction',
+                205,  'Practice in the basic elements of fiction writing: character
+                       sketch, plot development, description, and dialog.', 3);
+
+--Let's look at the data
+select	dept.name, dept.chair, c.courseName, c.courseNumber, c.units
+from	department dept inner join course c on dept."NAME" = c.DEPARTMENTNAME
+order by dept."NAME", c.courseNumber;
+
+create table section (
+    departmentName     varchar(50)     not null,
+    courseNumber    integer         not null,
+    sectionNumber   integer         not null,
+    sYear           integer         not null,
+    semester        varchar(6),
+    instructor       varchar(50)     not null,
+    days            varchar(10)     not null,
+    startTime       integer         not null,
+    building        varchar(10)     not null,
+    roomNo          integer         not null,
+
+    constraint      semesterValidation  check(semester in('Fall', 'Spring', 'Summer', 'Winter')),
+    constraint      daysValidation      check(days in('MW', 'TuThu', 'MWF', 'F', 'S')),
+    constraint      sectionPK           primary key(departmentName, courseNumber, sectionNumber, sYear),
+    constraint      sectionFK           foreign key(departmentName, courseNumber) references course(departmentName, courseNumber),
+    constraint      sectionUK01         unique(courseNumber, sectionNumber, sYear, semester, instructor, startTime)
+);
+
+SELECT * FROM "Lab One to Many".COURSE FETCH FIRST 200 ROWS ONLY;
+
+INSERT INTO section (departmentName, courseNumber, sectionNumber, sYear, semester, instructor, days, startTime, building, roomNo)
+    VALUES  ('Computer Engineering Computer Science', 202, 01, 1, 'Fall', 'Prof D', 'MW', 800, 'ECS', 105),
+            ('Computer Engineering Computer Science', 323, 06, 3, 'Spring', 'Prof Brown', 'TuThu', 930, 'ECS', 408),
+            ('English', 205, 03, 2, 'Summer', 'Prof O', 'MWF', 1000, 'PH1', 100);
+
+INSERT INTO section (departmentName, courseNumber, sectionNumber, sYear, semester, instructor, days, startTime, building, roomNo)
+    VALUES  ('Chemical Engineering', 380, 01, 3, 'Fall', 'Prof Xu', 'F', 1300, 'EN2', 100);
+
+INSERT INTO course(departmentName, courseName, courseNumber, description, units)
+    VALUES ('Chemical Engineering', 'Probability Statistics', 380, 'Something to do with chemistry', 4);
+
+INSERT INTO section (departmentName, courseNumber, sectionNumber, sYear, semester, instructor, days, startTime, building, roomNo)
+    VALUES  ('Chemical Engineering', 380, 01, 3, 'Fall', 'Prof Xu', 'F', 1300, 'EN2', 100);
+
+
+select	dept.name, dept.chair, c.courseName, c.courseNumber, c.units, s.sectionNumber, s.startTime, s.building, s.roomNo
+from	department dept inner join course c on dept."NAME" = c.DEPARTMENTNAME
+inner join section s on c.COURSENUMBER = s.COURSENUMBER
+order by dept."NAME", c.courseNumber;
