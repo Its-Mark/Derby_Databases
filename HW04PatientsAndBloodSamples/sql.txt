@@ -1,0 +1,65 @@
+CREATE TABLE patient(
+    testDate        date        NOT NULL,
+    testTime        time        NOT NULL,
+    pID             int         NOT NULL, 
+    patientName     varchar(100)        NOT NULL,
+    cellNumber      int         NOT NULL,
+
+    CONSTRAINT      patient_PK      PRIMARY KEY     (testDate, testTime, pID)
+);
+
+CREATE TABLE bloodSample(
+    dateTaken       date        NOT NULL,
+    timeTaken       time        NOT NULL,
+    pID             int         NOT NULL,
+    substanceName   varchar(100)        NOT NULL,
+
+    
+    CONSTRAINT      bloodSample_FK      FOREIGN KEY     (dateTaken, timeTaken, pID) REFERENCES patient (testDate, testTime, pID),
+    CONSTRAINT      bloodSample_PK      PRIMARY KEY     (dateTaken, timeTaken, pID, substanceName)
+);
+
+CREATE TABLE substance(
+    dateTaken       date        NOT NULL,
+    timeTaken       time        NOT NULL,
+    pID             int         NOT NULL,
+    substanceName       varchar(100)        NOT NULL,
+    substanceLVL        int                 NOT NULL,
+
+    CONSTRAINT      substance_FK        FOREIGN KEY     (dateTaken, timeTaken, pID, substanceName) REFERENCES bloodSample(dateTaken, timeTaken, pID, substanceName)
+);
+
+
+INSERT INTO patient (testDate, testTime, pID, patientName, cellNumber)
+VALUES ('2020-01-21', '10:24:20', 123456, 'John Doe', 56222),
+       ('2019-05-05', '12:56:06', 123415, 'Bob Thompson', 98342),
+       ('2020-12-21', '14:31:04', 098123, 'James Smith', 21353);
+
+INSERT INTO bloodSample(dateTaken, timeTaken, pID, substanceName)
+VALUES ('2020-01-21', '10:24:20', 123456, 'sugar'),
+       ('2020-01-21', '10:24:20', 123456, 'LDL'),
+       ('2019-05-05', '12:56:06', 123415, 'HDL'),
+       ('2019-05-05', '12:56:06', 123415, 'alcohol'),
+       ('2020-12-21', '14:31:04', 098123, 'calcium'),
+       ('2020-12-21', '14:31:04', 098123, 'sodium');
+
+INSERT INTO bloodSample(dateTaken, timeTaken, pID, substanceName)
+VALUES ('2019-05-05', '12:56:06', 123415, 'LDL'),
+       ('2020-12-21', '14:31:04', 098123, 'LDL');
+
+
+INSERT INTO substance(dateTaken, timeTaken, pID, substanceName, substanceLVL)
+VALUES ('2020-01-21', '10:24:20', 123456, 'sugar', 122),
+       ('2020-01-21', '10:24:20', 123456, 'LDL', 423),
+       ('2019-05-05', '12:56:06', 123415, 'HDL', 314),
+       ('2019-05-05', '12:56:06', 123415, 'alcohol', 123),
+       ('2020-12-21', '14:31:04', 098123, 'calcium', 30),
+       ('2020-12-21', '14:31:04', 098123, 'sodium', 192),
+       ('2019-05-05', '12:56:06', 123415, 'LDL', 99),
+       ('2020-12-21', '14:31:04', 098123, 'LDL', 160);
+
+
+SELECT patientName, testDate, testTime FROM patient p 
+NATURAL JOIN bloodSample b
+NATURAL JOIN substance s 
+WHERE (s.SUBSTANCELVL > 160 AND s.SUBSTANCENAME = 'LDL');
