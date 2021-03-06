@@ -1,0 +1,36 @@
+CREATE TABLE titleCredits(
+    composer        varchar(1000)       NOT NULL,
+    yearOfBirth     varchar(1000)       NOT NULL,
+    nationality     varchar(1000)       NOT NULL,
+
+    CONSTRAINT      titleCreditsPK      PRIMARY KEY     (composer)
+);
+
+
+
+CREATE TABLE composition (
+    composer        varchar(1000)       NOT NULL,
+    title           varchar(1000)       NOT NULL,
+
+    CONSTRAINT      compositionPK       PRIMARY KEY     (composer, title),
+    CONSTRAINT      compositionFK       FOREIGN KEY     (composer)     REFERENCES      titleCredits (composer)
+);
+
+
+INSERT INTO titleCredits (composer, yearOfBirth, nationality)
+VALUES  ('Beethoven', '1770', 'German'),
+        ('Brahms', '1841', 'German'),
+        ('Shostakovich', '1906', 'Russian'),
+        ('Mozart, W.A.', '1756', 'German'),
+        ('Dvorak', '1841', 'Czech');
+
+INSERT INTO composition(composer, title)
+VALUES  ('Beethoven', 'Symphony #9'),
+        ('Beethoven', 'Violin Concerto'),
+        ('Brahms', 'Violin Concerto'),
+        ('Shostakovich', 'Symphony #9'),
+        ('Mozart, W.A.', 'Clarinet Concerto'),
+        ('Dvorak', 'Symphony #9');
+
+select title, c.composer, nationality, yearOfBirth from composition as c
+inner join titleCredits as t on c.COMPOSER = t.COMPOSER;
