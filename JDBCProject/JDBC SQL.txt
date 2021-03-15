@@ -1,0 +1,56 @@
+CREATE TABLE WritingGroups (
+    GroupName       varchar(100)       NOT NULL,
+    HeadWriter      varchar(100)       NOT NULL,
+    YearFormed      int                NOT NULL,
+    Subject         varchar(100)       NOT NULL,
+
+    CONSTRAINT      WritingGroups_PK    PRIMARY KEY (GroupName)
+);
+
+
+CREATE TABLE Publishers(
+    PublisherName       varchar(100)        NOT NULL,
+    PublisherAddress    varchar(100)        NOT NULL,
+    PublisherPhone      varchar(11)         NOT NULL,
+    PublisherEmail      varchar(100)        NOT NULL,
+
+    CONSTRAINT          Publishers_PK       PRIMARY KEY (PublisherName)
+
+);
+
+CREATE TABLE Books(
+    GroupName       varchar(100)        NOT NULL,
+    BookTitle       varchar(100)        NOT NULL,
+    PublisherName   varchar(100)        NOT NULL,
+    YearPublished   int           NOT NULL,
+    NumberPages     int             NOT NULL,
+
+    CONSTRAINT      Books_PK            PRIMARY KEY (GroupName, BookTitle),
+    CONSTRAINT      Books_FK1           FOREIGN KEY (GroupName)     REFERENCES      WritingGroups (GroupName),
+    CONSTRAINT      Books_FK2           FOREIGN KEY (PublisherName) REFERENCES      Publishers (PublisherName)
+    
+);
+
+INSERT INTO WritingGroups (GroupName, HeadWriter, YearFormed, Subject)
+VALUES  ('The Fellowship of Souther Writers', 'John Smith', 1980, 'All Genres'),
+        ('New England Science Writers', 'Lucas Coe', 1991, 'Science Fiction'),
+        ('Northern Speculative Fiction', 'Lizzie Noel', 2001, 'Fiction'),
+        ('Alaska Professional Communicators', 'Ty Adcok', 2002, 'Journalism'),
+        ('Chandler Romance Writing', 'Elaine Carter', 1995, 'Romance');
+
+INSERT INTO Publishers (PublisherName, PublisherAddress, PublisherPhone, PublisherEmail)
+VALUES  ('Penguin Random House', '1160 Trademark Dr # 111, Reno, NV 89521', '18007333000', 'newaccount@penguinrandomhouse.com'),
+        ('Hachette Livre', '58 Rue Jean Bleuzen, 92170 Vanves, France', '33143923000', 'support@hbgusa.com.'),
+        ('Harper Collins', '195 Broadway, New York, NY 10007', '12122077000', 'harpercollins.en.cs@digitalriver.com'),
+        ('Macmillan Publishers', 'Equitable Life Building, 120 Broadway, New York, NY 10271', '16463075151', 'customerservice@mpsvirginia.com'),
+        ('Simon & Schuster', 'Century Plaza Towers, 2049 Century Park E #3180, Los Angeles, CA 90067', '13102863480', 'sim&schus@simonschuster.com');
+
+INSERT INTO Books (GroupName, BookTitle, PublisherName, YearPublished, NumberPages)
+VALUES  ('The Fellowship of Souther Writers', 'The Art of Fiction', 'Penguin Random House', 2002, 659),
+        ('Chandler Romance Writing', 'Beloved', 'Harper Collins', 1987, 324),
+        ('Alaska Professional Communicators', 'Ulysses' ,'Hachette Livre', 1922, 730),
+        ('Northern Speculative Fiction', 'To The Lighthouse', 'Macmillan Publishers', 1927, 224),
+        ('New England Science Writers', 'The Trial of Franz Kafka', 'Simon & Schuster', 1925, 106);
+
+SELECT GroupName FROM WritingGroups;
+
