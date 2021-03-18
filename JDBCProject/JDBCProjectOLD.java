@@ -87,7 +87,6 @@ public class JDBCProject {
                         stmt = conn.createStatement();
                         sql = "SELECT GroupName FROM WritingGroups";
                         ResultSet rs = stmt.executeQuery(sql);
-                        
                         while (rs.next()) {
                             String gn = rs.getString("GroupName");
                             System.out.println(dispNull(gn));
@@ -106,39 +105,33 @@ public class JDBCProject {
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, g);
                             ResultSet rs = ps.executeQuery();
-                            
-                          
+                            while (rs.next()){
                                 System.out.println("PRINTING ALL DATA FOR " + g);
                                 System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", "Publisher Name", "Group Name", "Head Writer", "Year Formed", "Subject", "Book Title", "Year Published", "Number of Pages", "Publisher Address", "Publisher Phone", "Publisher EMAIL");
-                                System.out.println();
-                                
-                                if (!rs.next()){
-                                    System.out.println("There was no data found for: " + g);
-                                } else {
-                                    do {
-                                        String pubname = rs.getString("PublisherName");
-                                        String gname = rs.getString("GroupName");
-                                        String hwriter = rs.getString("HeadWriter");
-                                        String yformed = rs.getString("YearFormed");
-                                        String sub = rs.getString("Subject");
-                                        String btitle = rs.getString("BookTitle");
-                                        String ypub = rs.getString("YearPublished");
-                                        String np = rs.getString("NumberPages");
-                                        String pubadd = rs.getString("PublisherAddress");
-                                        String pubphone = rs.getString("PublisherPhone");
-                                        String pubemail = rs.getString("PublisherEmail");
 
-                                        System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", dispNull(pubname), dispNull(gname), dispNull(hwriter), dispNull(yformed), dispNull(sub), dispNull(btitle), dispNull(ypub), dispNull(np), dispNull(pubadd), dispNull(pubphone), dispNull(pubemail));
-                                        System.out.println();
-                                    } while(rs.next());
-                                }
-                            //n.close();
+                                String pubname = rs.getString("PublisherName");
+                                String gname = rs.getString("GroupName");
+                                String hwriter = rs.getString("HeadWriter");
+                                String yformed = rs.getString("YearFormed");
+                                String sub = rs.getString("Subject");
+                                String btitle = rs.getString("BookTitle");
+                                String ypub = rs.getString("YearPublished");
+                                String np = rs.getString("NumberPages");
+                                String pubadd = rs.getString("PublisherAddress");
+                                String pubphone = rs.getString("PublisherPhone");
+                                String pubemail = rs.getString("PublisherEmail");
+
+                                System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", dispNull(pubname), dispNull(gname), dispNull(hwriter), dispNull(yformed), dispNull(sub), dispNull(btitle), dispNull(ypub), dispNull(np), dispNull(pubadd), dispNull(pubphone), dispNull(pubemail));
+                            }
+
                             rs.close();
                             ps.close();
+                            //n.close();
                             System.out.println();
                         } catch (SQLException sqle){
                             System.out.println(sqle.getMessage());
                         }
+
 
                     } else if (userin.equals("3")){ //list all publishers
                         System.out.println("LIST OF PUBLISHERS: ");
@@ -158,35 +151,29 @@ public class JDBCProject {
                         //Scanner n = new Scanner(System.in);
                         System.out.println("Enter a publisher's name: ");
                         String p = in.nextLine();
+                        System.out.println("PRINTING ALL DATA FOR: " + p);
                         sql = "SELECT DISTINCT * FROM publishers INNER JOIN books ON books.PUBLISHERNAME = publishers.PUBLISHERNAME INNER JOIN writingGroups ON writinggroups.GROUPNAME = books.GROUPNAME WHERE UPPER(publishers.PUBLISHERNAME) = UPPER(?)";
                         try {
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, p);
                             ResultSet rs = ps.executeQuery();
                             System.out.println();
-                            
-                            if (!rs.next()){
-                                System.out.println("There was no data found for: " + p);
-                            } else {
-                                do {
-                                    System.out.println("PRINTING ALL DATA FOR: " + p);
-                                    System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", "Publisher Name", "Publisher Address", "Publisher Phone Number", "Publisher Email", "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages", "Group Name", "Head Writer", "Year Formed", "Subject");
-                                    String pn = rs.getString("publisherName");
-                                    String pa = rs.getString("publisherAddress");
-                                    String pp = rs.getString("publisherPhone");
-                                    String pe = rs.getString("publisherEmail");
-                                    String gn = rs.getString("groupName");
-                                    String bt = rs.getString("bookTitle");
-                                    String yp = rs.getString("yearPublished");
-                                    String np = rs.getString("numberPages");
-                                    String hw = rs.getString("headWriter");
-                                    String yf = rs.getString("yearFormed");
-                                    String s = rs.getString("subject");
+                            System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s|\n", "Publisher Name", "Publisher Address", "Publisher Phone Number", "Publisher Email", "Group Name", "Book Title", "Publisher Name", "Year Published", "Number of Pages", "Group Name", "Head Writer", "Year Formed", "Subject");
+                            while (rs.next()){
+                                String pn = rs.getString("publisherName");
+                                String pa = rs.getString("publisherAddress");
+                                String pp = rs.getString("publisherPhone");
+                                String pe = rs.getString("publisherEmail");
+                                String gn = rs.getString("groupName");
+                                String bt = rs.getString("bookTitle");
+                                String yp = rs.getString("yearPublished");
+                                String np = rs.getString("numberPages");
+                                String hw = rs.getString("headWriter");
+                                String yf = rs.getString("yearFormed");
+                                String s = rs.getString("subject");
+                                
+                                System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s|\n", pn, pa, pp, pe, gn, bt, pn, yp, np, gn, hw, yf, s);
 
-                                    System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", dispNull(pn), dispNull(pa), dispNull(pp), dispNull(pe), dispNull(gn), dispNull(bt), dispNull(pn), dispNull(yp), dispNull(np), dispNull(gn), dispNull(hw), dispNull(yf), dispNull(s));
-                                    
-                                } while (rs.next());
-                               
                             }
                             rs.close();
                             ps.close();
@@ -213,39 +200,30 @@ public class JDBCProject {
                     } else if (userin.equals("6")){
                         System.out.println("ENTER BOOK TITLE: ");
                         String b = in.nextLine();
-                        System.out.println("ENTER THE GROUP'S NAME: " );
-                        String g = in.nextLine();
-                        sql = "SELECT * FROM BOOKS NATURAL JOIN PUBLISHERS NATURAL JOIN WRITINGGROUPS WHERE UPPER(BOOKTITLE) = UPPER(?) AND UPPER(BOOKS.GROUPNAME) = UPPER(?)";
+                        System.out.println("PRINTING ALL DATA FOR: " + b);
+                        sql = "SELECT * FROM BOOKS NATURAL JOIN PUBLISHERS NATURAL JOIN WRITINGGROUPS WHERE UPPER(BOOKTITLE) LIKE UPPER(?)";
                         try {
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, b);
-                            ps.setString(2, g);
                             ResultSet rs = ps.executeQuery();
                             System.out.println();
-                         
-                            System.out.println("PRINTING ALL DATA FOR: " + b);
-                            System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", "Group Name", "Publisher Name", "Book Title", "Year Published", "Number of Pages", "Publisher Address", "Publisher Phone", "Publisher Email", "Head Writer", "Year Formed", "Subject");
+                            System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s|\n", "Group Name", "Publisher Name", "Book Title", "Year Published", "Number of Pages", "Publisher Address", "Publisher Phone", "Publisher Email", "Head Writer", "Year Formed", "Subject");
+                            while (rs.next()){
+                                String pn = rs.getString("publisherName");
+                                String pa = rs.getString("publisherAddress");
+                                String pp = rs.getString("publisherPhone");
+                                String pe = rs.getString("publisherEmail");
+                                String gn = rs.getString("groupName");
+                                String bt = rs.getString("bookTitle");
+                                String yp = rs.getString("yearPublished");
+                                String np = rs.getString("numberPages");
+                                String hw = rs.getString("headWriter");
+                                String yf = rs.getString("yearFormed");
+                                String s = rs.getString("subject");
+                                
+                                System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s|\n", gn, pn, bt, yp, np, pa, pp, pe, hw, yf, s);
 
-                            if (!rs.next()){
-                                System.out.println("There was no data found for: " + b);
-                            } else {
-                                do {
-                                    String pn = rs.getString("publisherName");
-                                    String pa = rs.getString("publisherAddress");
-                                    String pp = rs.getString("publisherPhone");
-                                    String pe = rs.getString("publisherEmail");
-                                    String gn = rs.getString("groupName");
-                                    String bt = rs.getString("bookTitle");
-                                    String yp = rs.getString("yearPublished");
-                                    String np = rs.getString("numberPages");
-                                    String hw = rs.getString("headWriter");
-                                    String yf = rs.getString("yearFormed");
-                                    String s = rs.getString("subject");
-
-                                    System.out.printf("%-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s| %-5s\n", gn, pn, bt, yp, np, pa, pp, pe, hw, yf, s);
-                                } while (rs.next());
                             }
-                            
                             rs.close();
                             ps.close();
                             System.out.println();
@@ -268,36 +246,22 @@ public class JDBCProject {
                         String numPages = in.nextLine();
                         sql = "INSERT INTO books(groupName, bookTitle, publisherName, yearPublished, numberPages) VALUES (?, ?, ?, ?, ?)";
                         try {
-                            if(Integer.valueOf(yearPub) > 0 && Integer.valueOf(numPages) > 0){
-                            
-                                PreparedStatement ps = conn.prepareStatement(sql);
-                                ps.setString(1, group);
-                                ps.setString(2, title);
-                                ps.setString(3, pubName);
-                                ps.setInt(4, Integer.valueOf(yearPub));
-                                ps.setInt(5, Integer.valueOf(numPages));
-
-                                ps.executeUpdate();
-
-                                System.out.println("Book: " + title + " inserted...");
-
-                                ps.close();
-                                System.out.println();
-                            } else {
-                                System.out.println("ERROR: Ensure 'Number of Pages' and 'Year Published' must a number above 0.");
-                            }
-
+                           PreparedStatement ps = conn.prepareStatement(sql);
+                           ps.setString(1, group);
+                           ps.setString(2, title);
+                           ps.setString(3, pubName);
+                           ps.setInt(4, Integer.valueOf(yearPub));
+                           ps.setInt(5, Integer.valueOf(numPages));
+                           
+                           ps.executeUpdate();
+                           
+                           System.out.println("Book " + title + " inserted...");
+                           
+                           ps.close();
+                           System.out.println();
+                           
                         } catch(SQLException sqle){
-                            
-                            if (sqle.getMessage().contains("BOOKS_FK1"))
-                                System.out.println("ERROR: Please enter a writing group that is already in the database");
-                            else if (sqle.getMessage().contains("BOOKS_FK2"))
-                                System.out.println("ERROR: Please enter a publishing company that is already in the database");
-                            else if (sqle.getMessage().contains("duplicate"))
-                                System.out.println("ERROR : This book already exists in the database. No need to insert again.");
-                            
-                        } catch(NumberFormatException nfe){
-                            System.out.println("ERROR: Ensure 'Number of Pages' and 'Year Published' must a number");
+                            System.out.println(sqle.getMessage());
                         }
                         
 
@@ -327,10 +291,7 @@ public class JDBCProject {
                             System.out.println("Publisher " + newpName + " added...");
                             
                         } catch(SQLException sqle){
-                            if (sqle.getMessage().contains("duplicate"))
-                                System.out.println("ERROR : This publisher already exists in the database. No need to insert again.");
-                            else 
-                                System.out.println(sqle.getMessage());
+                            System.out.println(sqle.getMessage());
                         }
                         
                         String sql2 = "UPDATE books SET books.publisherName = ? WHERE books.publisherName = ?";
@@ -347,44 +308,25 @@ public class JDBCProject {
                             ps2.close();
                             System.out.println();
                             
-                            String sql3 = "SELECT * FROM books WHERE books.PUBLISHERNAME = ?";
-                            PreparedStatement ps3 = conn.prepareStatement(sql3);
-                            ps3.setString(1, oldpName);
-                            ResultSet rs = ps3.executeQuery();
-                            if(!rs.next()){
-                                System.out.println("The publisher you were trying to replace did not own any books.");
-                            }
-                            
-                            rs.close();
-                            ps3.close();
-                            
                             
                         } catch (SQLException sqle2){
-                            System.out.println("The publisher you were trying to replace does not exist.");
+                            System.out.println(sqle2.getMessage());
                         }
 
                     } else if (userin.equals("9")){
-                        sql = "DELETE FROM books WHERE books.bookTitle = ? AND books.groupName = ?";
+                        sql = "DELETE FROM books where books.bookTitle = ?";
                         System.out.println("Enter a books name: ");
                         String bookToRemove =  in.nextLine();
-                        System.out.println("Enter the writing group's name: ");
-                        String gn = in.nextLine();
                         
                         try{
                             PreparedStatement ps = conn.prepareStatement(sql);
                             ps.setString(1, bookToRemove);
-                            ps.setString(2, gn);
                             
-                            int check = ps.executeUpdate();
+                            ps.executeUpdate();
                             
-                            if (check > 0)
-                                System.out.println("Book " + bookToRemove + " was removed");
-                            else
-                                System.out.println("The book and group name did not match an entry in the database.");
-                                                            
                             ps.close();
+                            System.out.println();
                             
-                          
                         } catch (SQLException sqle){
                             System.out.println(sqle.getMessage());
                         }
