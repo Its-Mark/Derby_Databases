@@ -1,7 +1,7 @@
-Tue Mar 16 09:22:28 PDT 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Tue Apr 06 09:36:53 PDT 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Mar 16 09:22:28 PDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0178-3bd8-817e-ffff8f932b0b 
+Tue Apr 06 09:36:54 PDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0178-a80b-438d-ffff8f932b0b 
 on database directory D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab\CECS323Lab with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
 Loaded from file:/C:/Program%20Files%20(x86)/Derby/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,7 +12,7 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab
 Database Class Loader started - derby.database.classpath=''
-Tue Mar 16 09:22:29 PDT 2021 Thread[DRDAConnThread_2,5,main] (XID = 1300), (SESSIONID = 0), (DATABASE = CECS323Lab), (DRDAID = {1}), Cleanup action starting
+Tue Apr 06 09:36:54 PDT 2021 Thread[DRDAConnThread_2,5,main] (XID = 1301), (SESSIONID = 0), (DATABASE = CECS323Lab), (DRDAID = {1}), Cleanup action starting
 java.sql.SQLNonTransientConnectionException: Connection authentication failure occurred.  Reason: Invalid authentication..
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
@@ -66,6 +66,6 @@ ERROR 08004: Connection authentication failure occurred.  Reason: Invalid authen
 	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
 ============= end nested exception, level (1) ===========
 Cleanup action completed
-Tue Mar 16 09:22:29 PDT 2021 Thread[DRDAConnThread_2,5,main] (DATABASE = CECS323Lab), (DRDAID = {1}), Connection authentication failure occurred.  Reason: Invalid authentication..
+Tue Apr 06 09:36:54 PDT 2021 Thread[DRDAConnThread_2,5,main] (DATABASE = CECS323Lab), (DRDAID = {1}), Connection authentication failure occurred.  Reason: Invalid authentication..
 ----------------------------------------------------------------
-Tue Mar 16 10:49:41 PDT 2021: Shutting down Derby engine
+Tue Apr 06 12:36:07 PDT 2021: Shutting down Derby engine
