@@ -1,0 +1,89 @@
+CREATE TABLE University (
+    UniversityName      varchar(60)        NOT NULL,
+
+    CONSTRAINT          University_PK      PRIMARY KEY (UniversityName)
+);
+
+CREATE TABLE Department (
+    UniversityName      varchar(60)        NOT NULL,
+    DepartmentName      varchar(50)        NOT NULL,
+    DepartmentHead      varchar(60)        NOT NULL,
+
+    CONSTRAINT          Department_PK      PRIMARY KEY (UniversityName, DepartmentName),
+    CONSTRAINT          Department_FK1     FOREIGN KEY (UniversityName) REFERENCES University(UniversityName)
+
+);
+
+CREATE TABLE Course (
+    CourseNumber        int                 NOT NULL,
+    NumberUnits         int                 NOT NULL,
+    Description         varchar(500)        NOT NULL,
+    DepartmentName      varchar(50)         NOT NULL,
+
+    CONSTRAINT          Course_PK           PRIMARY KEY (CourseNumber, DepartmentName),
+    CONSTRAINT          Course_FK           FOREIGN KEY (DepartmentName) REFERENCES Department(DepartmentName)
+
+);
+
+CREATE TABLE CourseSection (
+    CourseNumber        int                 NOT NULL,
+    SectionNumber       int                 NOT NULL,
+    TimePeriod          time                NOT NULL,
+    DaysOfWeek          varchar(30)         NOT NULL,
+    Instructor          varchar(30)         NOT NULL,
+    DepartmentName      varchar(50)         NOT NULL,
+
+    CONSTRAINT          CourseSection_PK    PRIMARY KEY (DepartmentName, CourseNumber, SectionNumber),
+    CONSTRAINT          CourseSection_FK1   FOREIGN KEY (DepartmentName, CourseNumber) REFERENCES Course (DepartmentName, CourseNumber)
+
+);
+
+CREATE TABLE Student (
+    FirstName           varchar(20)         NOT NULL,
+    LastName            varchar(20)         NOT NULL,
+    StudentEmail        varchar(50)         NOT NULL,
+    StudentID           int                 NOT NULL,
+    
+    CONSTRAINT          Student_PK          PRIMARY KEY (StudentID)
+);
+
+CREATE TABLE StudentEnrolledCourses (
+    StudentID           int                 NOT NULL,
+    SectionNumber       int                 NOT NULL,
+    CourseNumber        int                 NOT NULL,
+    DepartmentName      varchar(50)         NOT NULL,
+
+    CONSTRAINT          SEC_PK              PRIMARY KEY (StudentID, SectionNumber, CourseNumber, DepartmentName),
+    CONSTRAINT          SEC_FK1             FOREIGN KEY (StudentID) REFERENCES Student (StudentID),
+    CONSTRAINT          SEC_FK2             FOREIGN KEY (SectionNumber, CourseNumber, DepartmentName) REFERENCES CourseSection (DepartmentName, CourseNumber, SectionNumber);
+);
+
+CREATE TABLE Team (
+    TeamName            varchar(50)         NOT NULL,
+    StudentID           int                 NOT NULL,
+    CourseNumber        int                 NOT NULL,
+    SectionNumber       int                 NOT NULL,
+    DepartmentName      varchar(50)         NOT NULL,
+    
+    CONSTRAINT          Team_PK1            PRIMARY KEY (TeamName, CourseNumber, SectionNumber, StudentID),
+    CONSTRAINT          Team_FK1            FOREIGN KEY (StudentID, SectionNumberm, CourseNumber, DepartmentName) REFERENCES StudentEnrolledCourses(StudentID, SectionNumber, CourseNumber, DepartmentName)
+
+);
+
+CREATE TABLE Survey (
+    OverallRating       int                 CHECK (OverallRating >= 0 AND OverallRating <= 5),
+    SurveyNumber        int                 NOT NULL,
+    TeamName            varchar(50)         NOT NULL,
+    StudentID           int                 NOT NULL,
+    SectionNumber       int                 NOT NULL,
+    CourseNumber        int                 NOT NULL,
+
+    CONSTRAINT          Survey_PK1          PRIMARY KEY (TeamName, SurveyNumber, OverallRating),
+    CONSTRAINT          Survey_FK1          FOREIGN KEY (TeamName, CourseNumber, SectionNumber, StudentID) REFERENCES Team (TeamName, CourseNumber, SectionNumber, StudentID)
+
+);
+
+CREATE TABLE Questionaire (
+    QuestionNumber      int                 NOT NULL,
+    Rating              int                 CHECK (Rating >= 0 AND Rating <= 5)
+);

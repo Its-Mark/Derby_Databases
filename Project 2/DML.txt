@@ -1,0 +1,98 @@
+INSERT INTO University (UniversityName)
+VALUES  ('Monster University'),
+        ('CSULB'),
+        ('CSUF'),
+        ('Harvard'),
+        ('Yale');
+
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Peter', 'Parker', 'pparker@student.mu.edu', 09010),
+        ('CSULB', 'Tony', 'Stark', 'tstark@student.csulb.edu', 08210),
+        ('CSUF', 'Bruce', 'Banner', 'bbanner@student.csuf.edu', 70120),
+        ('Harvard', 'Steve', 'Rodgers', 'srodgers@student.harvard.edu', 39100),
+        ('Yale', 'Thor', 'Odinson', 'todinson@student.yale.edu', 21001),
+        ('CSULB', 'Wanda', 'Maximoff', 'wmaximoff@student.csulb.edu', 12030);
+
+INSERT INTO Department (UniversityName, DepartmentName, DepartmentHead)
+VALUES  ('Monster University', 'Physics', 'Nick Fury'),
+        ('CSULB', 'Computer Science', 'Joe Biden'),
+        ('CSUF', 'Liberal Arts', 'Barack Obama'),
+        ('Harvard', 'Biology', 'George Bush'),
+        ('Yale', 'Chemistry', 'Ronald Reagan'),
+        ('CSULB', 'Communications', 'Lyndon Johnson');
+
+INSERT INTO Course (CourseNumber, NumberUnits, Description, DepartmentName)
+VALUES  (326, 4, 'Database Fundementals', 'Computer Science'),
+        (101, 3, 'Introduction to Physics', 'Physics'),
+        (300, 3, 'Public Speaking', 'Communications'),
+        (201, 3, 'English Composition', 'Liberal Arts'),
+        (153, 3, 'Marine Biology', 'Biology'),
+        (401, 5, 'Organic Chemistry', 'Chemistry');
+
+INSERT INTO CourseSection (CourseNumber, SectionNumber, DaysOfWeek, InstructorName, DepartmentName, StartTime, EndTime)
+VALUES  (326, 4, 'TuesThurs', 'Mimi Opkins', 'Computer Science', '09:30:00', '10:50:00'),
+        (101, 1, 'MonWed', 'David Brown', 'Physics', '13:00:00', '14:15:00'),
+        (300, 6, 'Fri', 'John Kennedy', 'Communications', '08:00:00', '08:50:00'),
+        (201, 10, 'MonWedFri', 'Dwight Eisenhower', 'Liberal Arts', '12:15:00', '13:00:00'),
+        (153, 9, 'Wed', 'Harry Truman', 'Biology', '10:00:00', '10:50:00'),
+        (401, 5, 'Sat', 'Franklin Roosevelt', 'Chemistry', '15:00:00', '17:00:00');
+
+INSERT INTO TEAM (TeamName, CourseNumber, SectionNumber, DepartmentName) 
+VALUES ('Avengers', 326, 4, 'Computer Science'),
+       ('X-MENS', 300, 6, 'Communications'),
+       ('SHIELD', 201, 10, 'Liberal Arts'),
+       ('REVENGERS', 153, 9, 'Biology'),
+       ('The Presidents', 401, 5, 'Chemistry');
+
+INSERT INTO TEAM (TeamName, CourseNumber, SectionNumber, DepartmentName) 
+VALUES ('Guardians', 101, 1, 'Physics');
+
+INSERT INTO StudentEnrolledCourses (StudentID, TeamName, DepartmentName, CourseNumber, SectionNumber)
+VALUES  (09010, 'Guardians', 'Physics', 101, 1),
+        (08210, 'X-MENS', 'Communications', 300, 6),
+        (70120, 'SHIELD', 'Liberal Arts', 201, 10),
+        (39100, 'REVENGERS', 'Biology', 153, 9),
+        (21001, 'The Presidents', 'Chemistry', 401, 5),
+        (12030, 'Avengers', 'Computer Science', 326, 4);
+
+
+INSERT INTO Question (QuestionID, QuestionText)
+VALUES (01, 'Did the other students attend meetings on time?'),
+       (02, 'Did every team member support the group consensus?'),
+       (03, 'Did the other team members produce the deliverables that they agreed to with high quality?'),
+       (04, 'Did you get along with your team members?'),
+       (05, 'Would you prefer to change teams?'),
+       (06, 'Do you feel every team members gave equal amounts of contribution for assignments?');
+
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Bucky', 'Barnes', 'bbarnes@student.mu.edu', 09020),
+        ('CSULB', 'Vision', 'Maximoff', 'vmaximoff@student.csulb.edu', 08220),
+        ('CSUF', 'Wayde', 'Wilson', 'wwilson@student.csuf.edu', 70130),
+        ('Harvard', 'Clark', 'Kent', 'ckent@student.harvard.edu', 39110),
+        ('Yale', 'Brunce', 'Wayne', 'bwayne@student.yale.edu', 21011),
+        ('CSULB', 'Eddie', 'Brock', 'ebrock@student.csulb.edu', 12040);
+
+INSERT INTO StudentEnrolledCourses (StudentID, TeamName, DepartmentName, CourseNumber, SectionNumber)
+VALUES  (09020, 'Guardians', 'Physics', 101, 1),
+        (08220, 'X-MENS', 'Communications', 300, 6),
+        (70130, 'SHIELD', 'Liberal Arts', 201, 10),
+        (39110, 'REVENGERS', 'Biology', 153, 9),
+        (21011, 'The Presidents', 'Chemistry', 401, 5),
+        (12040, 'Avengers', 'Computer Science', 326, 4);
+
+INSERT INTO QUESTIONNAIRE (QuestionNumber, RaterID, TeamName, DepartmentName, CourseNumber, SectionNumber, RateeID, Rating)
+VALUES  (1, 09020, 'Guardians', 'Physics', 101, 1, 09010, 4),
+        (2, 09010, 'Guardians', 'Physics', 101, 1, 09020, 5),
+        (1, 08220, 'X-MENS', 'Communications', 300, 6, 08210, 1),
+        (2, 08210, 'X-MENS', 'Communications', 300, 6, 08220, 2),
+        (3, 70130, 'SHIELD', 'Liberal Arts', 201, 10, 70120, 0),
+        (4, 70120, 'SHIELD', 'Liberal Arts', 201, 10, 70130, 4),
+        (3, 39110, 'REVENGERS', 'Biology', 153, 9, 39100, 3),
+        (4, 39100, 'REVENGERS', 'Biology', 153, 9, 39110, 3),
+        (5, 21011, 'The Presidents', 'Chemistry', 401, 5, 21001, 2),
+        (6, 21001, 'The Presidents', 'Chemistry', 401, 5, 21011, 0),
+        (5, 12040, 'Avengers', 'Computer Science', 326, 4, 12030, 5),
+        (6, 12030, 'Avengers', 'Computer Science', 326, 4, 12040, 5);
+
+        
+        

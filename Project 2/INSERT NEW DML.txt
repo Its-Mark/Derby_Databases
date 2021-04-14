@@ -1,0 +1,129 @@
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Bucky', 'Barnes', 'bbarnes@student.mu.edu', 09020),
+        ('CSULB', 'Vision', 'Maximoff', 'vmaximoff@student.csulb.edu', 08220),
+        ('CSUF', 'Wayde', 'Wilson', 'wwilson@student.csuf.edu', 70130),
+        ('Harvard', 'Clark', 'Kent', 'ckent@student.harvard.edu', 39110),
+        ('Yale', 'Brunce', 'Wayne', 'bwayne@student.yale.edu', 21011),
+        ('CSULB', 'Eddie', 'Brock', 'ebrock@student.csulb.edu', 12040);
+
+INSERT INTO StudentEnrolledCourses (StudentID, TeamName, DepartmentName, CourseNumber, SectionNumber)
+VALUES  (09020, 'Guardians', 'Physics', 101, 1),
+        (08220, 'X-MENS', 'Communications', 300, 6),
+        (70130, 'SHIELD', 'Liberal Arts', 201, 10),
+        (39110, 'REVENGERS', 'Biology', 153, 9),
+        (21011, 'The Presidents', 'Chemistry', 401, 5),
+        (12040, 'Avengers', 'Computer Science', 326, 4);
+
+INSERT INTO TEAM (TeamName, CourseNumber, SectionNumber, DepartmentName) 
+VALUES ('Avengers', 326, 4, 'Computer Science'),
+       ('X-MENS', 300, 6, 'Communications'),
+       ('SHIELD', 201, 10, 'Liberal Arts'),
+       ('REVENGERS', 153, 9, 'Biology'),
+       ('The Presidents', 401, 5, 'Chemistry'),
+       ('Guardians', 101, 1, 'Physics');
+
+--NEW INSERTS BELOW
+INSERT INTO TEAM (TeamName, CourseNumber, SectionNumber, DepartmentName) 
+VALUES ('Lakers', 326, 4, 'Computer Science'),
+       ('Clippers', 300, 6, 'Communications'),
+       ('Nets', 201, 10, 'Liberal Arts'),
+       ('Heat', 153, 9, 'Biology'),
+       ('Knicks', 401, 5, 'Chemistry'),
+       ('Raptors', 101, 1, 'Physics'),
+       ('Liverpool', 326, 4, 'Computer Science'),
+       ('Chelsea', 300, 6, 'Communications'),
+       ('Barcelona', 201, 10, 'Liberal Arts'),
+       ('Real Madrid', 153, 9, 'Biology'),
+       ('Juventus', 401, 5, 'Chemistry'),
+       ('Manchester City', 101, 1, 'Physics');
+
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Kobe', 'Bryant', 'kbryant@student.mu.edu', 19020),
+        ('CSULB', 'Lebron', 'James', 'ljames@student.csulb.edu', 18220),
+        ('CSUF', 'Dwane', 'Wade', 'dwade@student.csuf.edu', 80130),
+        ('Harvard', 'Jack', 'Black', 'jblack@student.harvard.edu', 49110),
+        ('Yale', 'Kevin', 'Harts', 'khart@student.yale.edu', 31011),
+        ('CSULB', 'Samuel L.', 'Jackson', 'sljackson@student.csulb.edu', 22040);
+
+
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Sebastian', 'Stan', 'sstan@student.mu.edu', 49020),
+        ('CSULB', 'Stan', 'Lee', 'slee@student.csulb.edu', 58220),
+        ('CSUF', 'Robert', 'Downey', 'rdowney@student.csuf.edu', 60130),
+        ('Harvard', 'Michael', 'Jordan', 'mjordan@student.harvard.edu', 79110),
+        ('Yale', 'Chuck', 'Norris', 'cnorris@student.yale.edu', 71011),
+        ('CSULB', 'Mark', 'Ruffalo', 'mruffalo@student.csulb.edu', 72040);
+
+INSERT INTO Student (UniversityName, FirstName, LastName, StudentEmail, StudentID)
+VALUES  ('Monster University', 'Big', 'Boss', 'bboss@student.mu.edu', 43020),
+        ('CSULB', 'Vin', 'Deisel', 'vdeisel@student.csulb.edu', 59220),
+        ('CSUF', 'Bob', 'Builder', 'bbuilder@student.csuf.edu', 69130),
+        ('Harvard', 'Ash', 'Ketchum', 'aketchum@student.harvard.edu', 73110),
+        ('Yale', 'Sasuke', 'Uchiha', 'suchiha@student.yale.edu', 79011),
+        ('CSULB', 'Naruto', 'Uzumaki', 'nuzumaki@student.csulb.edu', 79040),
+        ('Monster University', 'Aida', 'Wong', 'awong@student.mu.edu', 46020),
+        ('CSULB', 'Leon', 'Kennedy', 'lkennedy@student.csulb.edu', 56220),
+        ('CSUF', 'Post', 'Malone', 'pmalone@student.csuf.edu', 66130),
+        ('Harvard', 'Wal', 'Luigi', 'wluigi@student.harvard.edu', 76110),
+        ('Yale', 'Super', 'Mario', 'smario@student.yale.edu', 76011),
+        ('CSULB', 'Cloud', 'Strife', 'cstrife@student.csulb.edu', 71040),
+        ('Monster University', 'Solid', 'Snake', 'ssnake@student.mu.edu', 49320),
+        ('CSULB', 'Duck', 'Daphy', 'dduck@student.csulb.edu', 58320),
+        ('CSUF', 'Elon', 'Musk', 'emusk@student.csuf.edu', 60330),
+        ('Harvard', 'Steve', 'Jobs', 'sjobs@student.harvard.edu', 79310),
+        ('Yale', 'Bill', 'Gates', 'bgates@student.yale.edu', 71311),
+        ('CSULB', 'Harry', 'Potter', 'hpotter@student.csulb.edu', 72340);
+
+--DELETE FROM STUDENT WHERE STUDENTID IN (72340, 71311, 79310, 60330, 58320, 49320, 71040, 76011, 76110, 66130, 56220, 46020, 79040, 79011, 73110, 69130, 59220, 43020);
+
+INSERT INTO StudentEnrolledCourses (StudentID, TeamName, DepartmentName, CourseNumber, SectionNumber)
+VALUES  (72040, 'Lakers', 'Computer Science', 326, 4),
+        (43020, 'Clippers', 'Communications', 300, 6),
+        (70130, 'Nets', 'Liberal Arts', 201, 10),
+        (59220, 'Heat', 'Biology', 153, 9),
+        (69130, 'Knicks', 'Chemistry', 401, 5),
+        (73110, 'Raptors', 'Physics', 101, 1);
+
+
+
+        (49020, 'Guardians', 'Physics', 101, 1),
+        (58220, 'X-MENS', 'Communications', 300, 6),
+        (60130, 'SHIELD', 'Liberal Arts', 201, 10),
+        (79110, 'REVENGERS', 'Biology', 153, 9),
+        (71011, 'The Presidents', 'Chemistry', 401, 5),
+        (22040, 'Avengers', 'Computer Science', 326, 4);
+--
+        (72040, 'Lakers', 'Computer Science', 326, 4),
+        (43020, 'Clippers', 'Communications', 300, 6),
+        (70130, 'Nets', 'Liberal Arts', 201, 10),
+        (59220, 'Heat', 'Biology', 153, 9),
+        (69130, 'Knicks', 'Chemistry', 401, 5),
+        (73110, 'Raptors', 'Physics', 101, 1),
+--
+        (79011, 'Liverpool', 'Computer Science', 326, 4),
+        (79040, 'Chelsea', 'Communications', 300, 6),
+        (46020, 'Barcelona', 'Liberal Arts', 201, 10),
+        (56220, 'Real Madrid', 'Biology', 153, 9),
+        (66130, 'Juventus', 'Chemistry', 401, 5),
+        (76110, 'Machester City', 'Physics', 101, 1),
+--
+        (76011, 'Lakers', 'Computer Science', 326, 4),
+        (71040, 'Clippers', 'Communications', 300, 6),
+        (49320, 'Nets', 'Liberal Arts', 201, 10),
+        (58320, 'Heat', 'Biology', 153, 9),
+        (60330, 'Knicks', 'Chemistry', 401, 5),
+        (79310, 'Raptors', 'Physics', 101, 1),
+--
+        (71311, 'Lakers', 'Computer Science', 326, 4),
+        (19020, 'Clippers', 'Communications', 300, 6),
+        (18220, 'Nets', 'Liberal Arts', 201, 10),
+        (80130, 'Heat', 'Biology', 153, 9),
+        (49110, 'Knicks', 'Chemistry', 401, 5),
+        (31011, 'Raptors', 'Physics', 101, 1);
+-- 79011 79040 46020
+--      (76110, 'Liverpool', 'Computer Science', 326, 4),
+--      (66130, 'Chelsea', 'Communications', 300, 6),
+--      (56220, 'Barcelona', 'Liberal Arts', 201, 10),
+--      (79011, 'Real Madrid', 'Biology', 153, 9),
+--      (79040, 'Juventus', 'Chemistry', 401, 5),
+--      (46020, 'Machester City', 'Physics', 101, 1);

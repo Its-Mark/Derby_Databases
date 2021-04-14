@@ -1,25 +1,12 @@
-Tue Apr 06 09:36:53 PDT 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
-----------------------------------------------------------------
-Tue Apr 06 09:36:54 PDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0178-a80b-438d-ffff8f932b0b 
-on database directory D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab\CECS323Lab with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
-Loaded from file:/C:/Program%20Files%20(x86)/Derby/db-derby-10.14.2.0-bin/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=14.0.1+7
-user.dir=C:\Program Files (x86)\Derby\db-derby-10.14.2.0-bin
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=D:\Users\Mark Garcia\Desktop\CECS 323\Derby Databases\Lab05CECS323Lab
-Database Class Loader started - derby.database.classpath=''
-Tue Apr 06 09:36:54 PDT 2021 Thread[DRDAConnThread_2,5,main] (XID = 1301), (SESSIONID = 0), (DATABASE = CECS323Lab), (DRDAID = {1}), Cleanup action starting
-java.sql.SQLNonTransientConnectionException: Connection authentication failure occurred.  Reason: Invalid authentication..
+Tue Apr 13 18:31:45 PDT 2021 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Tue Apr 13 18:31:45 PDT 2021 Thread[DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'TermProject2' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
 	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
@@ -35,12 +22,12 @@ java.sql.SQLNonTransientConnectionException: Connection authentication failure o
 	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
 	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
 	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-Caused by: ERROR 08004: Connection authentication failure occurred.  Reason: Invalid authentication..
+Caused by: ERROR XJ004: Database 'TermProject2' not found.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(Unknown Source)
 	... 21 more
 ============= begin nested exception, level (1) ===========
-ERROR 08004: Connection authentication failure occurred.  Reason: Invalid authentication..
+ERROR XJ004: Database 'TermProject2' not found.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
@@ -48,7 +35,7 @@ ERROR 08004: Connection authentication failure occurred.  Reason: Invalid authen
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
 	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
@@ -66,6 +53,7 @@ ERROR 08004: Connection authentication failure occurred.  Reason: Invalid authen
 	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
 ============= end nested exception, level (1) ===========
 Cleanup action completed
-Tue Apr 06 09:36:54 PDT 2021 Thread[DRDAConnThread_2,5,main] (DATABASE = CECS323Lab), (DRDAID = {1}), Connection authentication failure occurred.  Reason: Invalid authentication..
+Tue Apr 13 18:31:45 PDT 2021 Thread[DRDAConnThread_2,5,main] (DATABASE = TermProject2), (DRDAID = {1}), Database 'TermProject2' not found.
 ----------------------------------------------------------------
-Tue Apr 06 12:36:07 PDT 2021: Shutting down Derby engine
+Tue Apr 13 18:32:07 PDT 2021: Shutting down Derby engine
+----------------------------------------------------------------
