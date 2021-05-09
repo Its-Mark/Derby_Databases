@@ -1,0 +1,445 @@
+
+
+DROP TABLE player;
+CREATE TABLE player
+(
+	playerID			INT NOT NULL,
+    playerLastName		VARCHAR (50),
+    playerFirstName		VARCHAR (50),
+    playerDateOfBirth	DATE,
+    playerDateJoined	DATE,
+    
+    PRIMARY KEY (playerID)
+);
+
+DROP TABLE playerSkills;
+CREATE TABLE playerSkills
+(
+	skillType	VARCHAR (50),
+    
+    PRIMARY KEY (skillType)
+);
+
+DROP TABLE coach;
+CREATE TABLE coach
+(
+	coachID			INT NOT NULL,
+    coachLastName	VARCHAR (50),
+    coachFirstName	VARCHAR (50),
+    
+    PRIMARY KEY (coachID)
+);
+
+DROP TABLE assistantCoach;
+CREATE TABLE assistantCoach
+(
+	coachID		INT NOT NULL,
+    mentorID	INT NOT NULL,
+    
+    PRIMARY KEY (coachID),
+    CONSTRAINT assistantCoachID_fk     FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT assistantCoachMentor_fk FOREIGN KEY (mentorID) 
+    REFERENCES coach(coachID)
+);
+
+DROP TABLE coachSkills;
+CREATE TABLE coachSkills
+(
+	coachID			INT NOT NULL,
+    coachSkillType	VARCHAR (50),
+    
+    PRIMARY KEY (coachID,coachSkillType),
+    CONSTRAINT coachID_fk 		 FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT coachSkillType_fk FOREIGN KEY (coachSkillType) 
+    REFERENCES playerSkills(skillType)
+);
+
+DROP TABLE headCoach;
+CREATE TABLE headCoach
+(
+	coachID			INT NOT NULL,
+    headlineSkill	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (coachID),
+    CONSTRAINT headCoach_fk	    FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT headlineSkill_fk FOREIGN KEY (coachID, headlineSkill) 
+    REFERENCES coachSkills(coachID, coachSkillType)
+);
+
+DROP TABLE sports;
+CREATE TABLE sports
+(
+	sportsName	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (sportsName)
+);
+
+DROP TABLE playerTalents;
+CREATE TABLE playerTalents
+(
+	playerID	INT NOT NULL,
+    sportsName	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (playerID, sportsName),
+    CONSTRAINT playerID_fk  FOREIGN KEY (playerID) 
+    REFERENCES player(playerID),
+    CONSTRAINT sportsName_fk FOREIGN KEY (sportsName) 
+    REFERENCES sports(sportsName)
+);
+
+DROP TABLE coachSpecialty;
+CREATE TABLE coachSpecialty
+(
+	sportsName 	VARCHAR (50) NOT NULL,
+    coachID		INT NOT NULL,
+    
+    PRIMARY KEY (sportsName, coachID),
+    CONSTRAINT coachSportName_fk   FOREIGN KEY (sportsName) 
+    REFERENCES sports(sportsName),
+    CONSTRAINT coachSpecialtyID_fk FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID)
+);
+
+
+DROP TABLE mentorship;
+CREATE TABLE mentorship
+(
+	playerID INT NOT NULL,
+    sportsName VARCHAR (50) NOT NULL,
+    coachID INT NOT NULL,
+    
+    PRIMARY KEY (playerID, sportName, coachID),
+    CONSTRAINT mentorID_fk     		 FOREIGN KEY (playerID, sportsName) 
+    REFERENCES playerTalents(playerID, sportName),
+    CONSTRAINT mentorCoach_fk    	 FOREIGN KEY (coachID) 
+    REFERENCES headCoach(coachID),
+    CONSTRAINT coachSpecSportName_fk FOREIGN KEY (sportsName, coachID) 
+    REFERENCES coachSpecialty(sportsName, coachID)
+);
+
+
+INSERT INTO player
+VALUES 	(1, 'Kent', 'Clark', 1938-02-29, 1952-04-18),
+		(2, 'Wayne', 'Bruce', 1915-04-17, 1935-04-08),
+        (3, 'Prince', 'Diana', 1976-03-22, 1988-04-06),
+        (4, 'Jordan', 'Hal', 1976-02-20, 1988-04-07),
+        (5, 'Allen', 'Barry', 1989-03-14, 2008-04-17),
+        (6, 'Curry', 'Arthur', 1989-01-29, 2008-02-16),
+        (7, 'Maximoff', 'Wanda', 1976-02-10, 1998-03-11),
+        (8, 'Kane', 'Kate', 1990-01-26, 2012-05-17),
+        (9, 'Walters', 'Jennifer', 1980-11-09, 1998-07-09),
+        (10, 'Rogers', 'Steve', 1918-07-04, 1932-04-18),
+        (11, 'Odinson', 'Thor', 1964-08-11, 1987-02-24),
+        (12, 'Grey', 'Jean', 1967-09-12, 1989-08-25),
+        (13, 'Danvers', 'Carol', 1977-08-17, 1999-10-08),
+        (14, 'MURDOCK', 'MATTHEW', 1974-08-04, 1989-09-23);
+        
+
+INSERT INTO coach
+VALUES 	(1, 'Bunny', 'Lola'), (2, 'Martian', 'Marvin'), (3, 'Duck', 'Daffy'),
+        (4, 'Pig', 'Porky'), (5, 'Bunny', 'Bugs'), (6, 'Fudd', 'Elmer'),
+        (7, 'Devil', 'Tasmanian'), (8, 'Yosemite', 'Sam'), (9, 'Le Pew', 'Pepe'),
+        (10, 'Gonzales', 'Speedy'), (11, 'Bulldog', 'Hector'), (12, 'Hawk', 'Henery'),
+        (13, 'Dog', 'Charlie'), (14, 'Runner', 'Road'), (15, 'Coyote', 'Wile'),
+        (16, 'Voorhees', 'Jason'), (17, 'Pennyworth', 'Alfred'), (18, 'Waller', 'Amanda'),
+        (19, 'Constatine', 'John'), (20, 'Stewart', 'John'), (21, 'Apokolips', 'Darkseid');
+        
+
+INSERT INTO playerSkills
+VALUES	('Speed'), ('Defense'), ('Offense'), ('High Jumping'), ('Agility'),
+		('Endurance'), ('Flexability'), ('Strength'), ('Quick Foot Work'),
+        ('Highten Sense'), ('Long Jumping'), ('Advanved Handeling'),
+        ('Advanced Throwing'), ('Advanced Catching'), ('Cunning');
+
+
+INSERT INTO headcoach
+VALUES	(1, 'Defensive Ball Handling'), (2, 'Offensive Ball Handling'),
+		(3, 'Quick Manuverability'), (4, 'Point Shooting'), (5, 'Passing'),
+        (6, ''),
+
+
+INSERT INTO coachSkills
+VALUES	(1, 'Motivation'), (2, 'Intelligence'), (2, 'Offensive Planning'),
+		(2, 'Defensive Planning'), (3, 'Precision Shooting'), (3, 'Endurance'),
+        (4, 'Power Lifting'), (4, 'Speed Running'), (5, 'Manuver Sprinting'),
+        (5, ''), (6, ''), (6, ''),
+        (7, '');
+
+
+DROP TRIGGER maxCoachInsert;
+DELIMITER $$
+CREATE TRIGGER maxCoachesInsert 
+BEFORE INSERT ON mentorship FOR EACH ROW
+BEGIN 
+	DECLARE maxCoach INT;
+    SELECT count(*) INTO maxCoach
+    FROM mentorship
+    WHERE playerID = NEW.playerID;
+    IF (maxCoach = 3) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot be coach in more than three sports';
+	END IF;
+END$$
+DELIMITER ;
+
+SELECT playerID, GROUP_CONCAT(sportsName)
+FROM mentorship
+GROUP BY playerID
+ORDER BY playerID;
+
+
+INSERT INTO mentorship(playerID, sportsName, coachID)
+VALUES	(10, 'Football', 8);
+
+SELECT * FROM mentorship
+WHERE playerID = 10;
+
+SELECT coachID, coachLasttName, coachFirstName, 
+GROUP_CONCAT(sportsName)
+FROM coach
+JOIN headCoach USING (coachID)
+JOIN coachSpecialty USING (coachID)
+GROUP BY coachID
+ORDER BY coachID;
+
+SELECT * FROM headCoach;
+
+-- Prevent a player from being coached no more than three sports
+DELIMITER $$
+CREATE TRIGGER maxCoachesUpdate 
+BEFORE UPDATE ON mentorship FOR EACH ROW
+BEGIN
+	DECLARE maxCoach INT;
+    SELECT COUNT(*) INTO maxCoach
+    FROM mentorship
+    WHERE playerID = NEW.playerID;
+    IF (maxCoach > 3) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Player connot be a coach in more than three sports';
+	END IF;
+END$$
+DELIMITER ;
+
+
+UPDATE mentorship
+SET	playerID = 10
+WHERE playerID = 7;
+
+
+-- Trigger to prevent deletion of coach skills when coach only has two skills
+DELIMITER $$
+CREATE TRIGGER minCoachSports 
+BEFORE DELETE ON coachskills FOR EACH ROW
+BEGIN
+	DECLARE minSports INT;
+    SELECT COUNT(*) INTO minSports
+    FROM coachSkills
+    WHERE coachID = OLD.coachID;
+    IF (minSports = 2) THEN
+		SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Coaches must have at least two skills';
+	END IF;
+END$$
+DELIMITER ;
+
+SELECT * FROM coachskills
+WHERE coachID = 8;
+
+DELETE FROM coachskills
+WHERE coachID = 8 
+AND skillName = 'Dunking';
+
+
+-- Prevents players under the age of 10 from joining the Clinic
+DELIMITER $$
+CREATE TRIGGER minPlayerAge
+BEFORE INSERT ON player FOR EACH ROW
+BEGIN
+	DECLARE minAge INT;
+    SELECT TIMESTAMPDIFF(year, NEW.dateOfBirth, NOW()) INTO minAge;
+	IF (minAge < 10) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Players must be at least ten years old to join this Clinic';
+	END IF;
+END$$
+DELIMITER ;
+
+INSERT INTO player(playerID, playerLastName, playerFirstName, 
+				   dateOfBirth, dateJoined, coachings)
+VALUES	(15, 'Goldstank', 'Darin', 2020-02-03, 2020-02-04, NULL);
+
+SELECT asst.coachID, CONCAT(coachLastName, ' ', coachFirstName)
+AS "Coach", coach.coachID AS "Mentor ID", 
+CONCAT(coachLastName, ' ', coachFirstName)
+AS "Mentor" FROM assistantcoach asst
+JOIN coach ch1 USING (coachID)
+ORDER BY asst.coachID;
+
+
+SELECT * FROM coach
+ORDER BY coachID;
+INSERT INTO coach(coachID, coachLastName, coachFirstName)
+VALUES	(22, 'Cena', 'John');
+
+
+-- Trigger to enforce constraint, not inherently in structure, 
+-- to prevent coaches from mentoring themselves
+DELIMITER $$
+CREATE TRIGGER asstDuplicateCoach 
+BEFORE INSERT ON assistantcoach FOR EACH ROW
+BEGIN
+	IF (NEW.coachID = NEW.mentorID) THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Coaches cannot mentor themselves';
+	END IF;
+END$$
+DELIMITER ;
+
+
+SELECT * FROM assistantcoach
+ORDER BY coachID;
+INSERT INTO assistantcoach(coachID, mentorID)
+VALUES	(22, 22);
+
+
+-- Trigger to update player column
+DELIMITER $$
+CREATE TRIGGER sportsCoachInsert
+AFTER INSERT ON mentorship FOR EACH ROW
+BEGIN
+	SET sports = NEW.sportsName;
+    SET coachName = (SELECT CONCAT(coachLastName, ' ', coachFirstName)
+					 FROM coach
+                     WHERE coachID = NEW.coachID);
+	SET sportsCoach = CONCAT(sports, ' ', coachName);
+    UPDATE player
+    SET coachings = CONCAT_WS(', ', coachings, sportsCoach)
+    WHERE playerID = NEW.playerID;
+END$$
+DELIMITER ;
+
+SELECT * FROM player;
+UPDATE mentorship
+SET coachID = 5;
+	sportsName = 'Basketball'
+WHERE playerID = 9;
+
+
+-- Three different cases of sports --> coach deletions 
+DROP TRIGGER IF EXISTS sportsCoachDelete;
+DELIMITER $$
+CREATE TRIGGER sportsCoachDelete 
+AFTER DELETE ON mentorship FOR EACH ROW
+BEGIN
+	SET sports = OLD.sportsName;
+    SET coachName = (SELECT CONCAT(coachLastName, ' ', coachFirstName)
+					 FROM coach
+                     WHERE coachID = OLD.coachID);
+	SET sportsCoach = CONCAT(sports, ': ', coachName);
+    SELECT TRIM(coachings) INTO currCoachings 
+    FROM player WHERE playerID = OLD.playerID;
+    SELECT STRCMP(currCoachings, sportsCoach) INTO fullCoachMatch;
+    UPDATE player
+    SET coachings = CASE
+						WHEN fullCoachMatch = 0 THEN
+							REPLACE(coachings, sportsCoach, NULL)
+						WHEN fullCoachMatch != 0 THEN
+							REPLACE(coachings, sportsCoach, '')
+						ELSE coachings
+					END
+	WHERE playerID = OLD.playerID;
+    
+    -- Easier to just TRIM the leading and double comma manually
+    UPDATE player
+    SET coachings = TRIM(BOTH ', ' FROM coachings),
+		coachings = REPLACE(coachings, ', ,', ',')
+	WHERE playerID = OLD.playerID;
+END$$
+DELIMITER ;
+
+
+SELECT * FROM player
+WHERE playerID = 6;
+SELECT * FROM mentorship
+WHERE playerID = 6
+ORDER BY coachID;
+
+UPDATE player
+SET coachings = NULL
+WHERE playerID = 6;
+
+DELETE FROM mentorship
+WHERE playerID = 6
+AND sportsName = 'Basketball'
+AND coachID = 1;
+DELETE FROM mentorship
+WHERE playerID = 6
+AND sportsName = 'Soccer'
+AND coachID = 3;
+DELETE FROM mentorship
+WHERE playerID = 6 
+AND sportsName = 'Hockey'
+AND coachID = 7;
+
+INSERT INTO mentorship(playerID, sportsName, coachID)
+VALUES	(6, 'Basketball', 1), 
+		(6, 'Soccer', 3),
+		(6, 'Hockey', 7);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

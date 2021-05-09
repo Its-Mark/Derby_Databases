@@ -1,0 +1,236 @@
+DROP TABLE player;
+CREATE TABLE player
+(
+	playerID			INT NOT NULL,
+    playerLastName		VARCHAR (50),
+    playerFirstName		VARCHAR (50),
+    playerDateOfBirth	DATE,
+    playerDateJoined	DATE,
+    
+    PRIMARY KEY (playerID)
+);
+
+DROP TABLE playerSkills;
+CREATE TABLE playerSkills
+(
+	skillType	VARCHAR (50),
+    
+    PRIMARY KEY (skillType)
+);
+
+DROP TABLE coach;
+CREATE TABLE coach
+(
+	coachID			INT NOT NULL,
+    coachLastName	VARCHAR (50),
+    coachFirstName	VARCHAR (50),
+    
+    PRIMARY KEY (coachID)
+);
+
+DROP TABLE assistantCoach;
+CREATE TABLE assistantCoach
+(
+	coachID		INT NOT NULL,
+    mentorID	INT NOT NULL,
+    
+    PRIMARY KEY (coachID),
+    CONSTRAINT assistantCoachID_fk     FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT assistantCoachMentor_fk FOREIGN KEY (mentorID) 
+    REFERENCES coach(coachID)
+);
+
+DROP TABLE coachSkills;
+CREATE TABLE coachSkills
+(
+	coachID			INT NOT NULL,
+    coachSkillType	VARCHAR (50),
+    
+    PRIMARY KEY (coachID,coachSkillType),
+    CONSTRAINT coachID_fk 		 FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT coachSkillType_fk FOREIGN KEY (coachSkillType) 
+    REFERENCES playerSkills(skillType)
+);
+
+DROP TABLE headCoach;
+CREATE TABLE headCoach
+(
+	coachID			INT NOT NULL,
+    headlineSkill	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (coachID),
+    CONSTRAINT headCoach_fk	    FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID),
+    CONSTRAINT headlineSkill_fk FOREIGN KEY (coachID, headlineSkill) 
+    REFERENCES coachSkills(coachID, coachSkillType)
+);
+
+DROP TABLE sports;
+CREATE TABLE sports
+(
+	sportsName	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (sportsName)
+);
+
+DROP TABLE playerTalents;
+CREATE TABLE playerTalents
+(
+	playerID	INT NOT NULL,
+    sportsName	VARCHAR (50) NOT NULL,
+    
+    PRIMARY KEY (playerID, sportsName),
+    CONSTRAINT playerID_fk  FOREIGN KEY (playerID) 
+    REFERENCES player(playerID),
+    CONSTRAINT sportsName_fk FOREIGN KEY (sportsName) 
+    REFERENCES sports(sportsName)
+);
+
+DROP TABLE coachSpecialty;
+CREATE TABLE coachSpecialty
+(
+	sportsName 	VARCHAR (50) NOT NULL,
+    coachID		INT NOT NULL,
+    
+    PRIMARY KEY (sportsName, coachID),
+    CONSTRAINT coachSportName_fk   FOREIGN KEY (sportsName) 
+    REFERENCES sports(sportsName),
+    CONSTRAINT coachSpecialtyID_fk FOREIGN KEY (coachID) 
+    REFERENCES coach(coachID)
+);
+
+DROP TABLE mentorship;
+CREATE TABLE mentorship
+(
+	playerID INT NOT NULL,
+    sportsName VARCHAR (50) NOT NULL,
+    coachID INT NOT NULL,
+    
+    PRIMARY KEY (playerID, sportsName, coachID),
+    CONSTRAINT mentorID_fk     		 FOREIGN KEY (playerID, sportsName) 
+    REFERENCES playerTalents(playerID, sportsName),
+    CONSTRAINT mentorCoach_fk    	 FOREIGN KEY (coachID) 
+    REFERENCES headCoach(coachID),
+    CONSTRAINT coachSpecSportName_fk FOREIGN KEY (sportsName, coachID) 
+    REFERENCES coachSpecialty(sportsName, coachID)
+);
+
+INSERT INTO player
+VALUES 	(1, 'Kent', 'Clark', '1938-02-28','1952-04-18'),
+		(2, 'Wayne', 'Bruce', '1915-04-17', '1935-04-08'),
+        (3, 'Prince', 'Diana', '1976-03-22', '1988-04-06'),
+        (4, 'Jordan', 'Hal', '1976-02-20', '1988-04-07'),
+        (5, 'Allen', 'Barry', '1989-03-14', '2008-04-17'),
+        (6, 'Curry', 'Arthur', '1989-01-29', '2008-02-16'),
+        (7, 'Maximoff', 'Wanda', '1976-02-10', '1998-03-11'),
+        (8, 'Kane', 'Kate', '1990-01-26', '2012-05-17'),
+        (9, 'Walters', 'Jennifer', '1980-11-09', '1998-07-09'),
+        (10, 'Rogers', 'Steve', '1918-07-04', '1932-04-18'),
+        (11, 'Odinson', 'Thor', '1964-08-11', '1987-02-24'),
+        (12, 'Grey', 'Jean', '1967-09-12', '1989-08-25'),
+        (13, 'Danvers', 'Carol', '1977-08-17', '1999-10-08'),
+        (14, 'MURDOCK', 'MATTHEW', '1974-08-04', '1989-09-23');
+
+
+INSERT INTO coach
+VALUES 	(1, 'Bunny', 'Lola'), (2, 'Martian', 'Marvin'), (3, 'Duck', 'Daffy'),
+        (4, 'Pig', 'Porky'), (5, 'Bunny', 'Bugs'), (6, 'Fudd', 'Elmer'),
+        (7, 'Devil', 'Tasmanian'), (8, 'Yosemite', 'Sam'), (9, 'Le Pew', 'Pepe'),
+        (10, 'Gonzales', 'Speedy'), (11, 'Bulldog', 'Hector'), (12, 'Hawk', 'Henery'),
+        (13, 'Dog', 'Charlie'), (14, 'Runner', 'Road'), (15, 'Coyote', 'Wile'),
+        (16, 'Voorhees', 'Jason'), (17, 'Pennyworth', 'Alfred'), (18, 'Waller', 'Amanda'),
+        (19, 'Constatine', 'John'), (20, 'Stewart', 'John'), (21, 'Apokolips', 'Darkseid');
+        
+INSERT INTO playerSkills
+VALUES  ('Speed'), ('Defense'), ('Offense'), ('High Jumping'), ('Agility'),
+        ('Endurance'), ('Flexability'), ('Strength'), ('Quick Foot Work'),
+        ('Highten Sense'), ('Long Jumping'), ('Advanved Handeling'),
+        ('Advanced Throwing'), ('Advanced Catching'), ('Cunning'),
+        ('Speed Passing'), ('Under Water Basket Weaving'), ('Dunking'),
+        ('Trick Plays'), ('Stopping Power'), ('Power Sliding'),
+        ('Warm up Movments'), ('Energy Conservation'), ('Arm Strengthing'),
+        ('Puzzle Solving'), ('Deep Diving'), ('Core Strengthing'),
+        ('Leg Strengthing'), ('Team Unity'), ('Top Leadership'),
+        ('Pressure Handling'), ('Slam Dunking'), ('Assult Swimming'),
+        ('Motivation'), ('Intellegence'), ('Speed Swimming'), ('Strength Endurance');
+ INSERT INTO playerskills
+ VALUES ('Power Lifting'), ('Speed Running'), ('Speed Endurance'), ('Strategy Planning'),
+        ('Sprinting'), ('Power Jumping'), ('Speed Jumping');
+ INSERT INTO playerskills
+ VALUES ('Power Running');
+
+INSERT INTO sports
+VALUES  ('Basketball'), ('Football'), ('Baseball'),
+        ('Ping Pong'), ('Tennis'), ('Soccer'),
+        ('Volleyball'), ('Pool'), ('Bowling'),
+        ('Golf'), ('Swimming');
+        
+insert into assistantcoach
+values (1,9), (2, 15), (3, 20), (4,12), (5,19), (6,10), (7,14), (8,18), (11, 13), (16, 17);
+       
+INSERT INTO playerTalents 
+VALUES (1, 'Football'), (1, 'Swimming'),
+       (2, 'Tennis'), (2, 'Volleyball'),
+       (3, 'Bowling'),
+       (4, 'Pool'), (4, 'Golf'),
+       (5, 'Football'), (5, 'Swimming'),
+       (6, 'Bowling'),
+       (7, 'Basketball'),
+       (8, 'Baseball'),
+       (9, 'Swimming'),
+       (10, 'Ping Pong'), (10, 'Golf'),
+       (11, 'Volleyball'),
+       (12, 'Bowling'),
+       (13, 'Baseball'), (13, 'Basketball'),
+       (14, 'Pool'), (14, 'Volleyball');
+       
+INSERT INTO coachSkills
+VALUES  (1, 'Speed'), (2, 'Defense'), (2, 'Offense');
+INSERT INTO coachSkills
+VALUES (2, 'High Jumping'), (3, 'Agility'), (3, 'Endurance');
+INSERT INTO coachSkills
+VALUES  (4, 'Power Lifting'), (4, 'Speed Running'), (5, 'Advanved Handeling');
+INSERT INTO coachSkills
+VALUES  (5, 'Speed Swimming'), (6, 'Strength Endurance'), (6, 'Speed Endurance');
+INSERT INTO coachSkills
+VALUES (7, 'Strategy Planning'), (7, 'Pressure Handling'), (8, 'Slam Dunking');
+INSERT INTO coachSkills
+VALUES   (8, 'Dunking'), (9, 'Sprinting'), (9, 'Assult Swimming'), (10, 'Power Jumping');
+INSERT INTO coachSkills
+VALUES     (10, 'Puzzle Solving'), (11, 'Trick Plays'), (11, 'Speed Passing');
+INSERT INTO coachSkills
+VALUES     (12, 'Agility'), (12, 'Top Leadership'), (13, 'Advanced Throwing');
+INSERT INTO coachSkills
+VALUES    (13, 'High Jumping'), (14, 'Offense'), (14, 'Speed');
+INSERT INTO coachSkills
+VALUES     (15, 'Advanced Catching'), (15, 'Cunning'), (16, 'Under Water Basket Weaving');
+INSERT INTO coachSkills
+VALUES   (16, 'Stopping Power'), (17, 'Deep Diving'), (17, 'Warm up Movments');
+INSERT INTO coachSkills
+VALUES     (18, 'Arm Strengthing'), (18, 'Core Strengthing'), (19, 'Leg Strengthing');
+INSERT INTO coachSkills
+VALUES     (19, 'Team Unity'), (20, 'Speed Jumping'), (20, 'Power Running');
+INSERT INTO coachSkills
+VALUES     (21, 'Power Sliding'), (21, 'Energy Conservation');
+
+INSERT INTO headcoach
+VALUES  (21, 'Power Sliding'), (18, 'Arm Strengthing'),
+        (17, 'Deep Diving'), (14, 'Offense'), (15, 'Advanced Catching'),
+        (2, 'Offense'), (3, 'Endurance'), (4, 'Power Lifting'), (5, 'Speed Swimming'), (6, 'Strength Endurance'),
+        (7, 'Pressure Handling'),(8, 'Dunking'),(9, 'Sprinting'),(10, 'Puzzle Solving'),(11, 'Trick Plays'),
+        (12, 'Top Leadership'),(13, 'Advanced Throwing'), (16, 'Stopping Power'), (19, 'Team Unity'), 
+        (20, 'Speed Jumping');
+        
+insert into coachspecialty
+values  ('Football', 1), ('Ping Pong', 2), ('Soccer', 3),
+        ('Basketball', 4), ('Baseball', 5), ('Swimming', 6),
+        ('Golf', 7), ('Bowling', 8), ('Pool', 9), ('Tennis', 20), ('Volleyball', 15);
+
+insert into mentorship
+values    (1, 'Swimming', 6), (2, 'Tennis', 20), (3, 'Bowling', 8),
+        (4, 'Golf', 7), (5, 'Swimming', 6), (7, 'Basketball', 4),
+        (8, 'Baseball', 5), (9, 'Swimming', 6), (10, 'Ping Pong', 2),
+        (11, 'Volleyball', 15), (12, 'Bowling', 8), (13, 'Baseball', 5),
+        (14, 'Pool', 9);
